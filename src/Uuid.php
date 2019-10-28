@@ -31,13 +31,6 @@ final class Uuid
         return new UuidStruct($output);
     }
 
-    public function v2(): UuidStruct
-    {
-        $this->ffi->uuid_generate_time($output = $this->prepareOutput());
-
-        return new UuidStruct($output);
-    }
-
     public function v4(): UuidStruct
     {
         $this->ffi->uuid_generate_random($output = $this->prepareOutput());
