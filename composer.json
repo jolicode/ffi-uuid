@@ -1,0 +1,29 @@
+{
+  "name": "korbeil/ffi-uuid",
+  "description": "libuuid FFI implementation",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^7.4|^8.0",
+    "ext-FFI": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Korbeil\\Uuid\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Baptiste Leduc",
+      "email": "baptiste.leduc@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "doctrine/coding-standard": "^6.0",
+    "phpstan/phpstan": "^0.11.12",
+    "phpstan/phpstan-strict-rules": "^0.11.1"
+  },
+  "scripts": {
+    "cs-fix": "phpcs src/"
+  }
+}
