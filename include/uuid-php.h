@@ -1,4 +1,4 @@
-#define FFI_LIB "/lib/x86_64-linux-gnu/libuuid.so.1"
+#define FFI_LIB "libuuid.so.1"
 
 typedef unsigned char uuid_t[16];
 
