@@ -6,35 +6,92 @@ namespace Korbeil\Uuid;
 
 use FFI;
 use FFI\CData;
-use KorbeilUuidPhp;
 
 final class Uuid
 {
-    /** @var KorbeilUuidPhp */
-    private $ffi;
-    private CData $conn;
+    const UUID_SEPARATORS = [4, 2, 2, 2, 6];
 
-    public function __construct()
+    private array $value = [];
+    private ?string $cached = null;
+
+    public static function createFromString(string $uuid): self
     {
-        $this->ffi = FFI::load(__DIR__ . '/../include/uuid-php.h');
+        $matches = [];
+        preg_match_all('/([0-9a-z]){2}/', $uuid, $matches);
+
+        $value = [];
+        foreach ($matches[0] as $item) {
+            $value[] = hexdec($item);
+        }
+
+        return new self($value, $uuid);
     }
 
-    private function prepareOutput(): CData
+    public static function createFromCData(CData $uuid): self
     {
-        return $this->ffi->new('uuid_t');
+        $value = [];
+
+        foreach($uuid as $item) {
+            $value[] = $item;
+        }
+
+        return new self($value);
     }
 
-    public function v1(): UuidStruct
+    public function __construct(array $value, string $cached = null)
     {
-        $this->ffi->uuid_generate_time($output = $this->prepareOutput());
-
-        return new UuidStruct($output);
+        $this->value = $value;
+        $this->cached = $cached;
     }
 
-    public function v4(): UuidStruct
+    public function toString(): string
     {
-        $this->ffi->uuid_generate_random($output = $this->prepareOutput());
+        if (null === $this->cached) {
+            $this->cachedString();
+        }
 
-        return new UuidStruct($output);
+        return $this->cached;
+    }
+
+    private function cachedString(): void
+    {
+        $incr = 0;
+        $output = '';
+        $iterator = new \ArrayIterator(self::UUID_SEPARATORS);
+
+        foreach ($this->value as $item) {
+            $output .= dechex($item);
+
+            ++$incr;
+            if ($incr === $iterator->current()) {
+                $incr = 0;
+                $iterator->next();
+
+                if ($iterator->valid()) {
+                    $output .= '-';
+                }
+            }
+        }
+
+        $this->cached = $output;
+    }
+
+    /**
+     * @param \KorbeilUuidPhp $ffi
+     */
+    public function toCData(FFI $ffi): CData
+    {
+        $data = $ffi->new('uuid_t');
+
+        foreach ($this->value as $k => $item) {
+            $data[$k] = $item;
+        }
+
+        return $data;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 }
