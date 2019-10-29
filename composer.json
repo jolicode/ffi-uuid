@@ -3,19 +3,25 @@
   "description": "libuuid FFI implementation",
   "type": "library",
   "license": "MIT",
-  "require": {
-    "php": "^7.4|^8.0",
-    "ext-FFI": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Korbeil\\Uuid\\": "src/"
-    }
-  },
   "authors": [
     {
       "name": "Baptiste Leduc",
       "email": "baptiste.leduc@gmail.com"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "Korbeil\\Uuid\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^7.4|^8.0",
+    "ext-FFI": "*"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.15"
+  },
+  "scripts": {
+    "cs-fix": "php-cs-fixer fix"
+  }
 }
