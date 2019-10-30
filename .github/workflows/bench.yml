@@ -1,0 +1,27 @@
+name: bench
+on: [pull_request]
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+      - name: setup
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: 7.4
+          extension-csv: ffi
+      - name: install
+        run: composer install
+      - name: bench
+        run: echo "##[set-output name=bench;]`php bench.php`"
+        id: bench
+      - name: comment
+        uses: actions/github-script@0.2.0
+        env:
+          BENCH: ${{ steps.bench.outputs.bench }}
+        with:
+          github-token: ${{github.token}}
+          script: |
+            console.log(context.issue)
+            github.issues.createComment({...context.issue, issue_number: context.issue.number, body: process.env.BENCH})
