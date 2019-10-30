@@ -60,7 +60,12 @@ final class Uuid
         $iterator = new \ArrayIterator(self::UUID_SEPARATORS);
 
         foreach ($this->value as $item) {
-            $output .= dechex($item);
+            $current = dechex($item);
+            if (1 === \strlen($current)) {
+                $current = '0'.$current;
+            }
+
+            $output .= $current;
 
             ++$incr;
             if ($incr === $iterator->current()) {
