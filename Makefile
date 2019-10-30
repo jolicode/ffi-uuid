@@ -1,4 +1,4 @@
-.PHONY: docker-build docker-up
+.PHONY: docker-build docker-bash
 
 docker-build:
 	docker build -t ffi_uuid .
