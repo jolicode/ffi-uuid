@@ -36,6 +36,7 @@ final class UuidFactory
 
     /** @var KorbeilUuidPhp */
     private FFI $ffi;
+    private ?CData $emptyOutput = null;
 
     public function __construct()
     {
@@ -44,7 +45,11 @@ final class UuidFactory
 
     private function prepareOutput(): CData
     {
-        return $this->ffi->new('uuid_t');
+        if (null === $this->emptyOutput) {
+            $this->emptyOutput = $this->ffi->new('uuid_t');
+        }
+
+        return clone $this->emptyOutput;
     }
 
     public function v1(): Uuid
