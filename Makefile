@@ -1,7 +1,7 @@
-.PHONY: docker-build docker-up
+.PHONY: docker-build docker-bash
 
 docker-build:
 	docker build -t ffi_uuid .
 
 docker-bash:
-	docker run -it --name ffi_uuid ffi_uuid bash
+	docker run -it -v $(shell pwd):/app ffi_uuid bash
