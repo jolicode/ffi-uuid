@@ -51,31 +51,31 @@ final class UuidFactory
     {
         $this->ffi->uuid_generate_time($output = $this->prepareOutput());
 
-        return Uuid::createFromCData($output);
+        return new Uuid($output);
     }
 
     public function v4(): Uuid
     {
         $this->ffi->uuid_generate_random($output = $this->prepareOutput());
 
-        return Uuid::createFromCData($output);
+        return new Uuid($output);
     }
 
     public function v3(string $name, string $namespace = self::NAMESPACE_X500): Uuid
     {
-        $namespaceUuid = Uuid::createFromString($namespace);
+        $namespaceUuid = Uuid::createFromString($namespace, $this->ffi);
 
-        $this->ffi->uuid_generate_md5($output = $this->prepareOutput(), $namespaceUuid->toCData($this->ffi), $name, \mb_strlen($name));
+        $this->ffi->uuid_generate_md5($output = $this->prepareOutput(), $namespaceUuid->toCData(), $name, \mb_strlen($name));
 
-        return Uuid::createFromCData($output);
+        return new Uuid($output);
     }
 
     public function v5(string $name, string $namespace = self::NAMESPACE_X500): Uuid
     {
-        $namespaceUuid = Uuid::createFromString($namespace);
+        $namespaceUuid = Uuid::createFromString($namespace, $this->ffi);
 
-        $this->ffi->uuid_generate_sha1($output = $this->prepareOutput(), $namespaceUuid->toCData($this->ffi), $name, \mb_strlen($name));
+        $this->ffi->uuid_generate_sha1($output = $this->prepareOutput(), $namespaceUuid->toCData(), $name, \mb_strlen($name));
 
-        return Uuid::createFromCData($output);
+        return new Uuid($output);
     }
 }

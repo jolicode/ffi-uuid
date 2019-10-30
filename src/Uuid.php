@@ -11,34 +11,24 @@ final class Uuid
 {
     const UUID_SEPARATORS = [4, 2, 2, 2, 6];
 
-    private array $value = [];
+    private CData $value;
     private ?string $cached = null;
 
-    public static function createFromString(string $uuid): self
+    /** @var \KorbeilUuidPhp $ffi */
+    public static function createFromString(string $uuid, FFI $ffi): self
     {
         $matches = [];
         preg_match_all('/([0-9a-z]){2}/', $uuid, $matches);
 
-        $value = [];
-        foreach ($matches[0] as $item) {
-            $value[] = hexdec($item);
+        $value = $ffi->new('uuid_t');
+        foreach ($matches[0] as $k => $item) {
+            $value[$k] = hexdec($item);
         }
 
         return new self($value, $uuid);
     }
 
-    public static function createFromCData(CData $uuid): self
-    {
-        $value = [];
-
-        foreach($uuid as $item) {
-            $value[] = $item;
-        }
-
-        return new self($value);
-    }
-
-    public function __construct(array $value, string $cached = null)
+    public function __construct(CData $value, string $cached = null)
     {
         $this->value = $value;
         $this->cached = $cached;
@@ -81,18 +71,9 @@ final class Uuid
         $this->cached = $output;
     }
 
-    /**
-     * @param \KorbeilUuidPhp $ffi
-     */
-    public function toCData(FFI $ffi): CData
+    public function toCData(): CData
     {
-        $data = $ffi->new('uuid_t');
-
-        foreach ($this->value as $k => $item) {
-            $data[$k] = $item;
-        }
-
-        return $data;
+        return $this->value;
     }
 
     public function __toString(): string
