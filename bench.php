@@ -3,7 +3,7 @@
 require __DIR__.'/vendor/autoload.php';
 
 $count = 1 * 1000 * 1000;
-$factory = new Korbeil\Uuid\UuidFactory();
+$factory = new JoliCode\Uuid\UuidFactory();
 
 $s = microtime(true);
 for ($i = 0; $i < $count; ++$i) {

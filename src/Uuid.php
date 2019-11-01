@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Korbeil\Uuid;
+namespace JoliCode\Uuid;
 
 use FFI;
 use FFI\CData;
@@ -14,7 +14,7 @@ final class Uuid
     private CData $value;
     private ?string $cached = null;
 
-    /** @var \KorbeilUuidPhp $ffi */
+    /** @var \JoliCodeUuidPhp $ffi */
     public static function createFromString(string $uuid, FFI $ffi): self
     {
         $matches = [];

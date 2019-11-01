@@ -10,7 +10,7 @@ namespace {
      * @method void uuid_generate_md5(FFI\CData $out, FFI\CData $ns, string $name, int $len)
      * @method void uuid_generate_sha1(FFI\CData $out, FFI\CData $ns, string $name, int $len)
      */
-    final class KorbeilUuidPhp/* extends FFI */
+    final class JoliCodeUuidPhp/* extends FFI */
     {
     }
 }

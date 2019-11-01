@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Korbeil\Uuid;
+namespace JoliCode\Uuid;
 
 use FFI;
 use FFI\CData;
-use KorbeilUuidPhp;
+use JoliCodeUuidPhp;
 
 final class UuidFactory
 {
@@ -34,7 +34,7 @@ final class UuidFactory
      */
     const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
 
-    /** @var KorbeilUuidPhp */
+    /** @var JoliCodeUuidPhp */
     private FFI $ffi;
     private ?CData $emptyOutput = null;
 
