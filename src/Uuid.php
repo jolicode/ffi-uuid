@@ -32,7 +32,12 @@ final class Uuid
         $this->cached = $cached;
     }
 
-    public function toString(): string
+    public function toCData(): CData
+    {
+        return $this->value;
+    }
+
+    public function __toString(): string
     {
         if (null === $this->cached) {
             // Covert int[] to a string
@@ -42,15 +47,5 @@ final class Uuid
         }
 
         return $this->cached;
-    }
-
-    public function toCData(): CData
-    {
-        return $this->value;
-    }
-
-    public function __toString(): string
-    {
-        return $this->toString();
     }
 }
