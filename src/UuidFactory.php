@@ -51,18 +51,18 @@ final class UuidFactory
         return new Uuid($output);
     }
 
-    public function v4(): Uuid
-    {
-        $this->ffi->uuid_generate_random($output = clone $this->emptyOutput);
-
-        return new Uuid($output);
-    }
-
     public function v3(string $name, string $namespace = self::NAMESPACE_X500): Uuid
     {
         $namespaceUuid = Uuid::createFromString($namespace, $this->ffi);
 
         $this->ffi->uuid_generate_md5($output = clone $this->emptyOutput, $namespaceUuid->toCData(), $name, \mb_strlen($name));
+
+        return new Uuid($output);
+    }
+
+    public function v4(): Uuid
+    {
+        $this->ffi->uuid_generate_random($output = clone $this->emptyOutput);
 
         return new Uuid($output);
     }
