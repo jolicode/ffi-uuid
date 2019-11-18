@@ -1,6 +1,6 @@
 # FFI libuuid
 
-Example in `run.php` file
+Example in `example.php` file
 
 ## Resources
 

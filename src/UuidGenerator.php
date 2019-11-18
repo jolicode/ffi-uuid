@@ -80,7 +80,7 @@ final class UuidGenerator
 
     private function decode(CData $value): string
     {
-        foreach ($value as $values[]) ;
+        foreach ($value as $values[]);
 
         return sprintf('%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x', ...$values);
     }
