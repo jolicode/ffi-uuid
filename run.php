@@ -4,28 +4,26 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use JoliCode\Uuid\UuidFactory;
+use JoliCode\Uuid\UuidGenerator;
 
-$factory = new UuidFactory();
+$generator = new UuidGenerator();
 
-var_dump('------ v1');
-var_dump($factory->v1()->toString());
-var_dump($factory->v1()->toString());
-var_dump($factory->v1()->toString());
+echo '------ v1' . "\n";
+echo $generator->v1() . "\n";
+echo $generator->v1() . "\n";
+echo $generator->v1() . "\n";
 
-var_dump('------ v4');
-var_dump($factory->v4()->toString());
-var_dump($factory->v4()->toString());
-var_dump($factory->v4()->toString());
+echo '------ v3' . "\n";
+echo $generator->v3('BLA') . "\n";
+echo $generator->v3('BLA') . "\n";
+echo $generator->v3('BLAB') . "\n";
 
-var_dump('------ v3');
-var_dump($factory->v3('BLA')->toString());
-var_dump($factory->v3('BLA')->toString());
-var_dump($factory->v3('BLAB')->toString());
+echo '------ v4' . "\n";
+echo $generator->v4() . "\n";
+echo $generator->v4() . "\n";
+echo $generator->v4() . "\n";
 
-var_dump('------ v5');
-var_dump($factory->v5('BLA')->toString());
-var_dump($factory->v5('BLA')->toString());
-var_dump($factory->v5('BLAB')->toString());
-
-echo "\n";
+echo '------ v5' . "\n";
+echo $generator->v5('BLA') . "\n";
+echo $generator->v5('BLA') . "\n";
+echo $generator->v5('BLAB') . "\n";
