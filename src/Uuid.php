@@ -9,8 +9,6 @@ use FFI\CData;
 
 final class Uuid
 {
-    const UUID_SEPARATORS = [4, 2, 2, 2, 6];
-
     private CData $value;
     private ?string $cached = null;
 
@@ -37,38 +35,13 @@ final class Uuid
     public function toString(): string
     {
         if (null === $this->cached) {
-            $this->cachedString();
+            // Covert int[] to a string
+            foreach ($this->value as $values[]) ;
+
+            $this->cached = sprintf('%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x', ...$values);
         }
 
         return $this->cached;
-    }
-
-    private function cachedString(): void
-    {
-        $incr = 0;
-        $output = '';
-        $iterator = new \ArrayIterator(self::UUID_SEPARATORS);
-
-        foreach ($this->value as $item) {
-            $current = dechex($item);
-            if (1 === \strlen($current)) {
-                $current = '0'.$current;
-            }
-
-            $output .= $current;
-
-            ++$incr;
-            if ($incr === $iterator->current()) {
-                $incr = 0;
-                $iterator->next();
-
-                if ($iterator->valid()) {
-                    $output .= '-';
-                }
-            }
-        }
-
-        $this->cached = $output;
     }
 
     public function toCData(): CData
