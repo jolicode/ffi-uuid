@@ -16,3 +16,5 @@ for ($i = 0; $i < $count; ++$i) {
     $factory->v4();
 }
 printf("[v4] %.3fs", microtime(true) - $s);
+
+print("\n");
