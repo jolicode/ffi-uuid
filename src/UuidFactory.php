@@ -36,32 +36,24 @@ final class UuidFactory
 
     /** @var JoliCodeUuidPhp */
     private FFI $ffi;
-    private ?CData $emptyOutput = null;
+    private CData $emptyOutput;
 
     public function __construct()
     {
         $this->ffi = FFI::load(__DIR__ . '/../include/uuid-php.h');
-    }
-
-    private function prepareOutput(): CData
-    {
-        if (null === $this->emptyOutput) {
-            $this->emptyOutput = $this->ffi->new('uuid_t');
-        }
-
-        return clone $this->emptyOutput;
+        $this->emptyOutput = $this->ffi->new('uuid_t');
     }
 
     public function v1(): Uuid
     {
-        $this->ffi->uuid_generate_time($output = $this->prepareOutput());
+        $this->ffi->uuid_generate_time($output = clone $this->emptyOutput);
 
         return new Uuid($output);
     }
 
     public function v4(): Uuid
     {
-        $this->ffi->uuid_generate_random($output = $this->prepareOutput());
+        $this->ffi->uuid_generate_random($output = clone $this->emptyOutput);
 
         return new Uuid($output);
     }
@@ -70,7 +62,7 @@ final class UuidFactory
     {
         $namespaceUuid = Uuid::createFromString($namespace, $this->ffi);
 
-        $this->ffi->uuid_generate_md5($output = $this->prepareOutput(), $namespaceUuid->toCData(), $name, \mb_strlen($name));
+        $this->ffi->uuid_generate_md5($output = clone $this->emptyOutput, $namespaceUuid->toCData(), $name, \mb_strlen($name));
 
         return new Uuid($output);
     }
@@ -79,7 +71,7 @@ final class UuidFactory
     {
         $namespaceUuid = Uuid::createFromString($namespace, $this->ffi);
 
-        $this->ffi->uuid_generate_sha1($output = $this->prepareOutput(), $namespaceUuid->toCData(), $name, \mb_strlen($name));
+        $this->ffi->uuid_generate_sha1($output = clone $this->emptyOutput, $namespaceUuid->toCData(), $name, \mb_strlen($name));
 
         return new Uuid($output);
     }
