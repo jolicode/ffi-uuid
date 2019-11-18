@@ -19,7 +19,7 @@ jobs:
       - name: comment
         uses: actions/github-script@0.2.0
         env:
-          BENCH: ${{ steps.bench.outputs.bench }}
+          BENCH: ${{steps.bench.outputs.bench}}
         with:
           github-token: ${{github.token}}
           script: |
