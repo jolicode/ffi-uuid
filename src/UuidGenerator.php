@@ -34,12 +34,11 @@ final class UuidGenerator
      */
     const NAMESPACE_X500 = '6ba7b814-9dad-11d1-80b4-00c04fd430c8';
 
-    /** @var JoliCodeUuidPhp */
-    private FFI $ffi;
+    private JoliCodeUuidPhp $ffi;
 
     public function __construct()
     {
-        $this->ffi = FFI::load(__DIR__ . '/../include/uuid-php.h');
+        $this->ffi = JoliCodeUuidPhp::load(__DIR__ . '/../include/uuid-php.h');
     }
 
     public function v1(): string
